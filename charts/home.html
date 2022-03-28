@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <title>Home Page</title>
+    <style>
+        main{
+            margin: 8vh;
+        }
+        nav{
+            padding: 3vw;
+        }
+        .chart-parent--container{ 
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/home">Jason and Bruce</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse ms-auto" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
+                    <li><a class="nav-link" href="/reports">Reports</a></li>
+                    <li><a class="nav-link" href="/users">Users</a></li>
+                    <li><a class="btn btn-primary" href="/logout">Logout</a></li>
+                </ul>                
+          </div>
+            
+        </div>
+      </nav>
+      <header style="margin: 5vh;">
+        <h1>Home Page</h1>
+      </header>
+    <main>
+        
+        <div class="chart-parent--container" style="margin-bottom: 5vh;">
+            <div id="grid" class="chart--container"></div>
+            <div id="loadTime" class="chart--container"></div>
+            
+            <a href="/reports" class="btn btn-primary" >Generate Report for Total Load Time</a>
+            
+            <div id="pieChart" class="chart--container"></div>
+
+            <div>
+                Here we have our pie chart 
+            </div>
+        </div>
+        
+        
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h3>User Screen Width and Height</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover" id="userTable">
+                        <thead>
+                            <tr>
+                                <th>innerHeight</th>
+                                <th>innerWidth</th>
+                                <th>outerHeight</th>
+                                <th>outerWidth</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">                
+            
+                        </tbody>
+                    </table>
+                </div>
+            </div>   
+
+    </main>
+
+
+
+    <script>
+        function populateTable(userData){
+            let body = document.getElementById('userTableBody');
+            let row = body.insertRow(0);
+            let innerHeight = row.insertCell(0);
+            let innerWidth = row.insertCell(1);
+            let outerHeight = row.insertCell(2);
+            let outerWidth = row.insertCell(3);
+
+            innerHeight.innerHTML = userData.innerHeight;
+            innerWidth.innerHTML = userData.innerWidth;
+            outerHeight.innerHTML = userData.outerHeight;
+            outerWidth.innerHTML = userData.outerWidth;
+        }
+
+        function getUsers(){
+            let url = 'https://bruceandjason135.site/api/static/';
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+            },
+
+            })
+            .then(response => response.json())
+            .then(user => {
+                console.log('Successful user GET!', user);
+                for(i=0; i<user.length;i++){
+                    populateTable(user[i])
+                }
+                
+            })
+            .catch((error) => {
+                console.error('Error', error);
+                
+            })
+        }
+        
+        getUsers();
+
+
+        let timeData = {
+            values: []
+        };
+
+        fetch('https://bruceandjason135.site/api/performance')
+        .then(response => response.json())
+        .then(data => {
+            for (i=0;i<data.length;i++){
+                timeData.values.push(data[i].total_load_time)
+            }
+        })
+        .catch((err) => console.log('Error', err))
+
+        let cookies_enabled = {
+            values: []
+        };
+        let cookies_disabled = {
+            values: []
+        };
+        let screen = {
+            values: new Array(4)
+        };
+
+        fetch('https://bruceandjason135.site/api/static')
+        .then(response => response.json())
+        .then(data => {
+            let trueCount  = 0;
+            let falseCount = 0;
+            for (i=0;i<data.length;i++){
+                screen.values.push(data[i].innerWidth)
+                screen.values.push(data[i].innerHeight)
+                screen.values.push(data[i].outerWidth)
+                screen.values.push(data[i].outerHeight) 
+
+                if (data[i].cookie_enabled === true){
+                    trueCount++;
+                } else{
+                    falseCount++;
+                }
+            }
+            console.log(screen.values)
+            cookies_enabled.values.push(trueCount);
+            cookies_disabled.values.push(falseCount);
+        })
+        .catch((err) => console.log('Error', err))
+
+        let myConfig = {
+            type: 'bar',
+            title: {
+                text: 'Total Load Time For Each User Visit',
+                fontSize: "24px",
+                adjustLayout: true, // Prevents title overlapping grap
+            },
+            "scale": {
+                "size-factor": 0.5
+            },
+            scaleX: {
+                // Set scale label
+                label: {
+                    "text": "Visitor Number",
+                    "bold": true,
+                    "font-size": "14px",
+                },
+            },
+            scaleY: {
+                format:"%vms",
+                "max-value": 1100,
+                markers: [
+                    {
+                        type: "line",
+                        lineColor: "red",
+                        lineWidth: 1,
+                        range:[1000],
+                        label: {
+                            "text": "Critical",
+                            backgroundColor: "white",
+                            fontColor: "red",
+                            fontSize: 14,
+                            textAlign:'right',
+                        }
+                    }
+                ],            
+            },
+            plotarea: {
+                margin: 'dynamic'
+            },
+            plot: {
+                    'value-box':{ 
+                        placement: "top-in",
+                        'font-color': "white",
+                        'offset-y': -6
+                    },
+                animation: {
+                effect: 'ANIMATION_EXPAND_BOTTOM',
+                method: 'ANIMATION_STRONG_EASE_OUT',
+                sequence: 'ANIMATION_BY_NODE',
+                speed: 275,
+                }
+            },
+            series: [
+                {
+                values: timeData.values,    
+                },
+            ]
+        };
+        var pieConfig = {
+            "type": "pie",
+            "title": {
+                "text": "Cookies Enabled"
+            },
+            legend: {
+                "x":"70%",
+                "y":"20%",
+                draggable: true,
+            },
+            "series": [{
+                "values": cookies_enabled.values,
+                backgroundColor: '#14A859',
+                text: 'Cookies Enabled',
+                },
+                {
+                "values": cookies_disabled.values,
+                backgroundColor: '#00099A ',
+                text: 'Cookies Disabled',
+                },
+            ]
+        };
+        
+        setTimeout(function(){
+            zingchart.render({
+                id: 'loadTime',
+                data: myConfig,
+                height: 400, // Set to 100% to fully scale to parent container
+                width: "100%" // Defau8
+            });
+            zingchart.render({
+                id: 'pieChart',
+                data: pieConfig,
+                height: 400,
+                width: "100%"
+            });
+        }, 810)
+      </script>
+</body>
+</html>
