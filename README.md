@@ -1,2 +1,2 @@
 # Analytics App
-### Inside this repo, Ive made use of NodeJS to use ExpressJS to quickly set up API endpoints which collects data from a script which I have created to understand the performance of my web page and some information about the user. I also used MongoDB to store the data collected. 
+Inside this repo, Ive made use of NodeJS to use ExpressJS to quickly set up API endpoints which collects data from a script which I have created to understand the performance of my web page and some information about the user. I also used MongoDB to store the data collected. 
