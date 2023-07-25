@@ -1,10 +1,20 @@
 import express from "express";
+import createValidationMiddleware from "../middleware/validationMiddleWare.js";
+import PageViewDuration from "../models/PageViewDuration.js";
 
 const router = express.Router();
 
-router.get("/page-view", async (req, res) => {
-    res.send("you are in page-view");
-    res.status(200);
+const pageViewValidationMiddleware = createValidationMiddleware('PageViewDuration');
+router.post("/page-view", pageViewValidationMiddleware, async (req, res) => {
+    try {
+        const pageViewDurationData = req.body;
+        const createdPageViewObject = await PageViewDuration.create(pageViewDurationData)
+
+        console.log("Successful created Page View");
+        res.status(201).json(createdPageViewObject);
+    } catch(error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 export default router;

@@ -1,10 +1,20 @@
 import express from "express";
+import createValidationMiddleware from "../middleware/validationMiddleWare.js";
+import ButtonClick from "../models/ButtonClick.js";
 
 const router = express.Router();
 
-router.get("/button-clicks", async (req, res) => {
-    res.send("you are in button-clicks");
-    res.status(200);
-});
+const buttonClickValidationMiddleware = createValidationMiddleware('ButtonClick');
+router.post("/button-click", buttonClickValidationMiddleware, async (req, res) => {
+    try{
+        const clickData = req.body;
+        const createdButtonClickObject = await ButtonClick.create(clickData)
+
+        console.log("successfull create buttonClick");
+        res.status(201).json(createdButtonClickObject);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
+})
 
 export default router;
