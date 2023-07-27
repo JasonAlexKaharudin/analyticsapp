@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import buttonClicksRoutes from "./routes/buttonClicks.js";
 import pageViewRoutes from "./routes/pageView.js";
 import browserInfoRoutes from "./routes/browserInfo.js";
+import userEngagementRoutes from "./routes/userEngagement.js";
 
 // CONFIGS
 dotenv.config();
@@ -26,6 +27,7 @@ const API_PREFIX = "/api/analytics";
 app.use(`${API_PREFIX}`, buttonClicksRoutes);
 app.use(`${API_PREFIX}`, pageViewRoutes);
 app.use(`${API_PREFIX}`, browserInfoRoutes);
+app.use(`${API_PREFIX}`, userEngagementRoutes);
 
 const PORT = process.env.PORT || 9000;
 mongoose
