@@ -14,6 +14,9 @@ Implemented data tracking by attaching scripts to my website on react, which sen
 Vite application deployed on vercel. Displays the data collected from tracking using recharts. 
 
 ### Server
+deployment url: https://aged-moon-7506.fly.dev/api/analytics
+try out and append these endpoints: `/browser-statistics`, `/button-clicks`, `/button-clicks-stats`, `/average-page-views`
+
 Server holds the node express application that is deployed to fly.io. It receives data from my [personal website](https://github.com/JasonAlexKaharudin/portfolio) and sets up endpoints for the client application to query the relavant data.
 
 #### Others
