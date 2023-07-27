@@ -21,6 +21,7 @@ const createValidationMiddleware = (schema) => {
           body('userID').notEmpty().isString(),
           body('clicks').isArray(),
           body('clicks.*.buttonId').notEmpty().isString(),
+          body('clicks.*.pageURL').notEmpty().isString(),
           body('clicks.*.timestamp').notEmpty().isISO8601(),
         ];
       break;
@@ -29,6 +30,7 @@ const createValidationMiddleware = (schema) => {
           body('userID').notEmpty().isString(),
           body('pathURL').notEmpty().isString(),
           body('duration').notEmpty().isNumeric(),
+          body('timestamp').notEmpty().isISO8601(),         
       ];
       break;
     default:
