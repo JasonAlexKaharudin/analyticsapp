@@ -8,7 +8,8 @@ const browserInfoSchema = new mongoose.Schema({
   device: { type: String },
   operatingSystem: { type: String },
   timezone: { type: String },
-  language: { type: String }
+  language: { type: String },
+  timestamp: { type: Date, required: true },
 });
   
 const BrowserInfo = mongoose.model('BrowserInfo', browserInfoSchema);

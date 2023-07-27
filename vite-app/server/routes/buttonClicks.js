@@ -34,11 +34,55 @@ router.get("/button-clicks", validateStartDate, async (req, res) => {
             },
           ]);
 
-        res.status(200).json(buttonClicks);
+        const responsePayload = {
+          totalObjects: buttonClicks.length,
+          data: buttonClicks
+        }
+
+        res.status(200).json(responsePayload);
     } catch(error) {
         console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
+})
+
+router.get("/button-clicks-stats", validateStartDate, async (req, res) => {
+    try {
+        const startDate = new Date(req.query.startDate || Date.now() - defualtDays * 24 * 60 * 60 * 1000);
+    
+        const statistics = await ButtonClick.aggregate([
+          {
+            $unwind: '$clicks',
+          },
+          {
+            $match: {
+              'clicks.timestamp': { $gte: startDate },
+            },
+          },
+          {
+            $group: {
+              _id: '$clicks.buttonId',
+              totalClicks: { $sum: 1 },
+            },
+          },
+          {
+            $project: {
+              buttonId: '$_id',
+              _id: 0,
+              totalClicks: 1,
+            },
+          },
+          {
+            $sort: {
+              buttonId: 1,
+            },
+          },
+        ]);
+    
+        res.status(200).json(statistics);
+      } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
 })
 
 export default router;
