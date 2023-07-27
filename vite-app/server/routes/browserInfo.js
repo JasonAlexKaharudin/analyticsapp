@@ -21,9 +21,10 @@ router.post("/browser-info", browserInfoValidationMiddleware, async (req, res) =
 
 router.get('/browser-statistics', validateStartDate, async (req, res) => {
     try {
-      const startDate = new Date(req.query.startDate || Date.now() - 7 * 24 * 60 * 60 * 1000);
+      const startDate = new Date(req.query.startDate || Date.now() - 0.5 * 24 * 60 * 60 * 1000);
 
-      const browserInfos = await BrowserInfo.find({ timestamp: { $gte: startDate } });      
+      const browserInfos = await BrowserInfo.find({ timestamp: { $gte: startDate } });
+      const numberOfSessions = browserInfos.length;
   
       const usersPerLocation = {};
       for (const info of browserInfos) {
@@ -44,6 +45,7 @@ router.get('/browser-statistics', validateStartDate, async (req, res) => {
       }
   
       const userAnalytics = {
+        numberOfSessions: numberOfSessions,
         usersPerLocation,
         usersPerBrowserName,
         usersPerDevice,
