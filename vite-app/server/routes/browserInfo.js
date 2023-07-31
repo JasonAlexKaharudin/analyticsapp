@@ -27,21 +27,20 @@ router.get('/browser-statistics', validateStartDate, async (req, res) => {
       const numberOfSessions = browserInfos.length;
   
       const usersPerLocation = {};
-      for (const info of browserInfos) {
-        const timezone = info.timezone;
-        usersPerLocation[timezone] = (usersPerLocation[timezone] || 0) + 1;
-      }
-   
       const usersPerBrowserName = {};
-      for (const info of browserInfos) {
-        const browserName = info.browserName;
-        usersPerBrowserName[browserName] = (usersPerBrowserName[browserName] || 0) + 1;
-      }
-  
       const usersPerDevice = {};
+      const sessionTimestamps = {};
+
       for (const info of browserInfos) {
-        const device = info.device;
+        const { timezone, browserName, device, userID, timestamp } = info;
+  
+        usersPerLocation[timezone] = (usersPerLocation[timezone] || 0) + 1;
+        usersPerBrowserName[browserName] = (usersPerBrowserName[browserName] || 0) + 1;
         usersPerDevice[device] = (usersPerDevice[device] || 0) + 1;
+        if (!sessionTimestamps[userID]) {
+          sessionTimestamps[userID] = [];
+        }
+        sessionTimestamps[userID].push(timestamp);
       }
   
       const userAnalytics = {
@@ -49,6 +48,7 @@ router.get('/browser-statistics', validateStartDate, async (req, res) => {
         usersPerLocation,
         usersPerBrowserName,
         usersPerDevice,
+        sessionTimestamps
       };
   
       res.status(200).json(userAnalytics);
