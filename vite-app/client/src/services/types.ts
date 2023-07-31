@@ -38,11 +38,17 @@ export interface AveragePageViewResponse {
     averageDuration: number;
 }
 
+export interface SessionCounts {
+    date: string;
+    visits: number;
+}
+
 export interface GetBrowserStatisticsResponse {
     numberOfSessions: number;
     usersPerLocation: Record<string, number>;
     usersPerBrowserName: Record<string, number>;
     usersPerDevice: Record<string, number>;
+    sessionCountsPerDay: Array<SessionCounts>;
 }
 
 export interface GetButtonClickResponse {
