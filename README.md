@@ -11,6 +11,7 @@ Implemented data tracking by attaching scripts to my website on react, which sen
 - deprecated
 
 ### Client
+Deployment URL: https://analytics-app-gilt.vercel.app/
 Vite application deployed on vercel. Displays the data collected from tracking using recharts. 
 
 ### Server
