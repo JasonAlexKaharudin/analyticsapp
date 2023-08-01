@@ -44,14 +44,14 @@ router.get("/average-page-views", validateStartDate, async (req, res) => {
             },
             {
                 $sort: {
-                    pageURL: 1,
+                    averageDuration: 1,
                 },
             },
           ]);
 
         const responsePayload = {
           totalObjects: buttonClicks.length,
-          data: buttonClicks
+          data: buttonClicks.reverse()
         }
 
         res.status(200).json(responsePayload);
