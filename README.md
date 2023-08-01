@@ -1,4 +1,6 @@
 # Analytics Application
+See project here: https://analytics-app-gilt.vercel.app/
+
 Developed a dashboard that tracks interactions with my personal website. I used Recharts to help me present actionable data, including button clicks, browser information, and page view duration, empowering myself to make informed decisions and enhance website interaction and engagement.
 
 Implemented data tracking by attaching scripts to my website on react, which sent the information to a server hosted on fly.io. I set up my endpoints using Express.js to allow data submission, and MongoDB to store and manage the collected data.
