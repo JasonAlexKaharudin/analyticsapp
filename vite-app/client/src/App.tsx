@@ -3,11 +3,13 @@ import SessionChart from "./dataVizComponents/SessionChart";
 import ClicksChart from "./dataVizComponents/ClicksChart";
 import PageViewTable from "./dataVizComponents/PageViewTable";
 import BrowserChart from "./dataVizComponents/BrowserChart";
+import UserLocationChart from "./dataVizComponents/UserLocationChart";
+import UserActivity from "./dataVizComponents/UserActivity";
 
 function App() {
   return (  
     <>
-      <div id="layout" className="w-full h-full bg-[#FAFAFB] font-jakarta">
+      <div id="layout" className="w-100% h-100% bg-[#FAFAFB] font-jakarta">
         <NavBar/>
 
         <main id="mainContent" className="px-5 py-6 md:py-10 md:px-12">
@@ -27,7 +29,7 @@ function App() {
 
           <section id="row-2" className="grid grid-cols-1 grid-rows-1 gap-4 md:grid-cols-7 md:grid-rows-4">
             <div className="col-span-3 row-span-4 bg-[#FFFFFF]">
-              <SessionChart/>
+              <UserActivity/>
             </div>
 
             <div className="col-span-2 row-span-4 bg-[#FFFFFF]">
@@ -35,7 +37,7 @@ function App() {
             </div>
 
             <div className="col-span-2 row-span-4 bg-[#FFFFFF]">
-              <ClicksChart/>
+              <UserLocationChart/>
             </div>
           </section>
         </main>

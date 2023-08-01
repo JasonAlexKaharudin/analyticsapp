@@ -55,3 +55,13 @@ export interface GetButtonClickResponse {
     totalClicks: number;
     buttonId: string;
 }
+
+export interface GetButtonActivityResponse {
+    totalObjects: number;
+    activity: Array<ButtonActivity>;
+}
+
+export interface ButtonActivity {
+    date: string;
+    activityCount: number;
+}

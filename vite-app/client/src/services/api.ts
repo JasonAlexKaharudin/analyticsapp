@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { GetAveragePageViewResponse, GetBrowserStatisticsResponse, GetButtonClickResponse } from './types';
+import { GetAveragePageViewResponse, GetBrowserStatisticsResponse, GetButtonClickResponse, GetButtonActivityResponse } from './types';
 
 const baseURL: string = 'api/analytics';
 
@@ -8,7 +8,7 @@ export const analyticsApi = createApi({
     // baseQuery: fetchBaseQuery({ baseUrl: "https://aged-moon-7506.fly.dev/" }),
     
     reducerPath: "main",
-    tagTypes: ['PageView', 'ButtonClickStats', 'BrowserStats'],
+    tagTypes: ['PageView', 'ButtonClickStats', 'ButtonClickActivity', 'BrowserStats'],
     endpoints: (build) => ({
         getAveragePageView: build.query<GetAveragePageViewResponse, void>({
             query: () => `${baseURL}/average-page-views`,
@@ -18,6 +18,10 @@ export const analyticsApi = createApi({
             query: () => `${baseURL}/button-clicks-stats`,
             providesTags: ["ButtonClickStats"]
         }),
+        getButtonActivity: build.query<Array<GetButtonActivityResponse>, void>({
+            query: () => `${baseURL}/button-clicks-activity`,
+            providesTags: ["ButtonClickActivity"]
+        }),
         getBrowserStats: build.query<Array<GetBrowserStatisticsResponse>, void>({
             query: () => `${baseURL}/browser-statistics`,
             providesTags: ["BrowserStats"]
@@ -25,4 +29,4 @@ export const analyticsApi = createApi({
     })
 })
 
-export const { useGetAveragePageViewQuery, useGetButtonClickQuery, useGetBrowserStatsQuery } = analyticsApi;
+export const { useGetAveragePageViewQuery, useGetButtonClickQuery, useGetButtonActivityQuery, useGetBrowserStatsQuery } = analyticsApi;

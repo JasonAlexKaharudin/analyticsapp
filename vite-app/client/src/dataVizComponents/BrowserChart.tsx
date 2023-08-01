@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useGetBrowserStatsQuery } from "../services/api";
 import DashboardBox from "../components/DashboardBox";
 import BoxHeader from "../components/BoxHeader";
-import { Cell, Pie, PieChart, Sector, Tooltip } from "recharts";
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 const BrowserChart = () => {
     const { data } = useGetBrowserStatsQuery();
@@ -17,49 +17,44 @@ const BrowserChart = () => {
         }
       
         return [];
-      }, [data]);
-
-    console.log(deviceData);
-
-
+    }, [data]);
 
     return (
         <> 
             <DashboardBox>
-                <div>
-                    <div className="w-full h-full">
-                        <BoxHeader
-                            title="User Devices"
-                        />
-                        <PieChart
-                            width={300}
-                            height={150}
-                            margin={{
-                                top: 1,
-                                left: 0,
-                                right: 10,
-                                bottom: 0
-                            }}
+                <BoxHeader
+                    title="User Devices"
+                />
+                <ResponsiveContainer width="100%" height="85%">
+                    <PieChart
+                        width={100}
+                        height={100}
+                        margin={{
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0
+                        }}
+                    >
+                        <Pie
+                            stroke="none"
+                            data={deviceData}
+                            innerRadius={38}
+                            outerRadius={90}
+                            fill="#BD6100"
+                            paddingAngle={-0.5}
+                            dataKey="count"
+                            animationDuration={1800}
                         >
-                            <Pie
-                                stroke="none"
-                                data={deviceData}
-                                innerRadius={28}
-                                outerRadius={60}
-                                fill="#BD6100"
-                                paddingAngle={-0.5}
-                                animationDuration={1800}
-                                dataKey="count"
-                                nameKey="count"
-                            >
-                                {deviceData?.map((_entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={pieColors[index]} />
-                                ))}
-                            </Pie>
-                            <Tooltip/>
-                        </PieChart>
-                    </div>
-                </div>
+                            {deviceData?.map((_entry, index) =>  ( 
+                                <Cell key={`cell-${index}`} fill={pieColors[index]} />
+                            ))}
+                        </Pie>
+                        <Legend
+                            formatter={(v) => deviceData[v]["device"]}
+                        />
+                    </PieChart>
+                </ResponsiveContainer>
             </DashboardBox>
         </>
     )

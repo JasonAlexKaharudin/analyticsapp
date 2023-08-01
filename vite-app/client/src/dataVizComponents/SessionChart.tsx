@@ -59,7 +59,6 @@ const SessionChart = () => {
                   style={{ fontSize: '10px' }}
                 />
                 <Tooltip
-                  labelFormatter={(v) => v }
                 />
                 <Area 
                   type="monotone" 
