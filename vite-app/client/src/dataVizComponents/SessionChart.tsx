@@ -2,8 +2,6 @@ import { useMemo } from "react";
 import { useGetBrowserStatsQuery } from "../services/api";
 import DashboardBox from "../components/DashboardBox";
 import BoxHeader from "../components/BoxHeader";
-
-// import { BsArrowUpShort } from "react-icons/bs";
 import { 
   ResponsiveContainer, 
   Area, 
@@ -16,15 +14,12 @@ import {
 
 const SessionChart = () => {
     const { data } = useGetBrowserStatsQuery();
-    console.log(data)
   
     const sessionCounts = useMemo(() => {
       return (
         data && data[0].sessionCountsPerDay
       )
     }, [data])
-
-    console.log(sessionCounts);
 
     const todaysSessions = useMemo(() => {
       return (
