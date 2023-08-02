@@ -44,6 +44,7 @@ function transformVisitsData(visitsData) {
   const transformedData = [];
 
   const datesArray = generateLast7Dates();
+  console.log(datesArray);
 
   for (const dateObj of datesArray) {
     const date = dateObj.date;
