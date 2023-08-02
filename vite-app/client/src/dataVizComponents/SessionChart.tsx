@@ -3,7 +3,7 @@ import { useGetBrowserStatsQuery } from "../services/api";
 import DashboardBox from "../components/DashboardBox";
 import BoxHeader from "../components/BoxHeader";
 
-import { BsArrowUpShort } from "react-icons/bs";
+// import { BsArrowUpShort } from "react-icons/bs";
 import { 
   ResponsiveContainer, 
   Area, 
@@ -14,8 +14,10 @@ import {
   YAxis 
 } from "recharts";
 
+
+
 const SessionChart = () => {
-    const { data } = useGetBrowserStatsQuery(); 
+    const { data } = useGetBrowserStatsQuery();
   
     const sessionCounts = useMemo(() => {
       return (
@@ -28,9 +30,7 @@ const SessionChart = () => {
           <DashboardBox>
             <BoxHeader
               title="Sessions"
-              value={25}
-              percentage="4%"
-              icon={<BsArrowUpShort style={{ paddingTop: '2px' }} size={20} color={'22c553'}/>}
+              value={data && data[0].numberOfSessions}
             />
             <ResponsiveContainer width="100%" height="80%">
               <AreaChart

@@ -11,6 +11,7 @@ const BoxHeader = ({ title, value, percentage, icon }: Props) => {
   return (
     <div className='pt-2 pl-3'>
         <h1 className="text-lg text-gray-500">{title}</h1>
+        <h2 className="text-sm text-gray-400">last 7 days</h2>
         <div className='flex'>
           <p className="text-3xl">{value}</p>
           <span className="flex pt-[0.5rem] pl-2">
@@ -20,7 +21,6 @@ const BoxHeader = ({ title, value, percentage, icon }: Props) => {
             </span>
           </span>
         </div>
-        
     </div>
   )
 }
