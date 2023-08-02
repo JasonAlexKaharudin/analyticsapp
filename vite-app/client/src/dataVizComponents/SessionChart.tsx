@@ -14,8 +14,6 @@ import {
   YAxis 
 } from "recharts";
 
-
-
 const SessionChart = () => {
     const { data } = useGetBrowserStatsQuery();
   

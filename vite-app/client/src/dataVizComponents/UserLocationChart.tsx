@@ -19,10 +19,20 @@ const UserLocationChart = () => {
             const locationObject = data[0].usersPerLocation
             const locationEntries = Object.entries(locationObject);
 
-            formattedData = locationEntries.map(([location, count]) => ({
-                location: location.split('/')[1],
-                visitors: count,
-            }));
+            formattedData = locationEntries.map(([location, count]) => {
+                const locationSplit = location.split("/")[1]
+                 if (locationSplit === undefined) {
+                    return {
+                        location: "Unknown",
+                        visitors: count
+                    }
+                } else {
+                    return {
+                        location: locationSplit,
+                        visitors: count
+                    }
+                }
+            });
         }
             
         return formattedData.reverse();
