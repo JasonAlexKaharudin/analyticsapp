@@ -38,8 +38,6 @@ const BoxHeader = ({ title, value, percentage, icon, secondHeader, secondTitle, 
         }
       </div>
 
-
-
       <h2 className="pt-[0.2rem] pr-3 text-gray-400 pl-3text-sm">7 days</h2>
     </div>
   )
