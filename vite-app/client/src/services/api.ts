@@ -5,7 +5,6 @@ const baseURL: string = 'api/analytics';
 
 export const analyticsApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL }),
-    // baseQuery: fetchBaseQuery({ baseUrl: "https://aged-moon-7506.fly.dev/" }),
     
     reducerPath: "main",
     tagTypes: ['PageView', 'ButtonClickStats', 'ButtonClickActivity', 'BrowserStats'],
