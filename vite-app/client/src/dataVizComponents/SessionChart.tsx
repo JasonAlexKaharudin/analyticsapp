@@ -16,6 +16,7 @@ import {
 
 const SessionChart = () => {
     const { data } = useGetBrowserStatsQuery();
+    console.log(data)
   
     const sessionCounts = useMemo(() => {
       return (
@@ -23,13 +24,29 @@ const SessionChart = () => {
       )
     }, [data])
 
+    console.log(sessionCounts);
+
+    const todaysSessions = useMemo(() => {
+      return (
+        data && data[0].sessionCountsPerDay[data[0].sessionCountsPerDay.length - 1]['visits']
+      )
+    }, [data])
+
     return (
         <>
           <DashboardBox>
-            <BoxHeader
-              title="Sessions"
-              value={data && data[0].numberOfSessions}
-            />
+            <div className="flex">
+              <BoxHeader
+                title="Sessions"
+                value={data && data[0].numberOfSessions}
+                secondHeader={true}
+                secondTitle="Today"
+                secondValue={todaysSessions}
+              />
+
+
+            </div>
+            
             <ResponsiveContainer width="100%" height="80%">
               <AreaChart
                 data={sessionCounts}
@@ -61,6 +78,7 @@ const SessionChart = () => {
                 <Area 
                   type="monotone" 
                   dataKey="visits" 
+                  strokeWidth={3}
                   stroke="#E37400" 
                   fill="#FDF4EB"
                   animationDuration={1800}
