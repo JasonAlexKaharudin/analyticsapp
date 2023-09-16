@@ -3,6 +3,7 @@ import BrowserInfo from '../models/BrowserInformation.js'
 import validateStartDate from '../middleware/validateStartDate.js'
 import createValidationMiddleware from '../middleware/validationMiddleWare.js'
 import { postProcessBrowserInfo } from '../middleware/postProcessBrowserInfo.js'
+import { ProcessDataHelper } from '../helpers/processDataHelper.js'
 
 const router = express.Router()
 const browserInfoValidationMiddleware = createValidationMiddleware('BrowserInfo')
@@ -24,12 +25,12 @@ router.get('/browser-statistics', validateStartDate, async (req, res) => {
 
   try {
     const browserInfoData = await BrowserInfo.find({ timestamp: { $gte: startDate } })
-    const browserAnalytics = postProcessBrowserInfo(browserInfoData)
+    const browserAnalytics = postProcessBrowserInfo(browserInfoData, new ProcessDataHelper('visits'))
 
     res.status(200).json(browserAnalytics)
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ error: 'Internal Server Error.' })
   }
 })
 
