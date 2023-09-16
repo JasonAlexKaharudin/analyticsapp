@@ -1,4 +1,8 @@
-export function postProcessBrowserInfo (browserInfoData, transformDataHelper) {
+import { ProcessDataHelper } from '../helpers/processDataHelper.js'
+
+const processDataHelper = new ProcessDataHelper('visits')
+
+export function postProcessBrowserInfo (browserInfoData) {
   const numberOfSessions = browserInfoData.length
   const usersPerLocation = {}
   const usersPerBrowserName = {}
@@ -7,7 +11,7 @@ export function postProcessBrowserInfo (browserInfoData, transformDataHelper) {
 
   for (const browserInfo of browserInfoData) {
     const { timezone, browserName, device, timestamp } = browserInfo
-    const formattedDate = transformDataHelper.formatDate(timestamp)
+    const formattedDate = processDataHelper.formatDate(timestamp)
 
     usersPerLocation[timezone] = (usersPerLocation[timezone] || 0) + 1
     usersPerBrowserName[browserName] = (usersPerBrowserName[browserName] || 0) + 1
@@ -15,7 +19,7 @@ export function postProcessBrowserInfo (browserInfoData, transformDataHelper) {
     sessionCounts[formattedDate] = (sessionCounts[formattedDate] || 0) + 1
   }
 
-  const sessionCountsPerDay = transformDataHelper.formatForClient([sessionCounts], 'visits')
+  const sessionCountsPerDay = processDataHelper.formatForClient([sessionCounts], 'visits')
 
   return {
     numberOfSessions,

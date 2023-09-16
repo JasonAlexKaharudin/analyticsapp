@@ -3,7 +3,7 @@ import createValidationMiddleware from '../middleware/validationMiddleWare.js'
 import validateStartDate from '../middleware/validateStartDate.js'
 import ButtonClick from '../models/ButtonClick.js'
 import { postProcessClickActivity } from '../middleware/postProcessClickActivity.js'
-import { ProcessDataHelper } from '../helpers/processDataHelper.js'
+
 
 const router = express.Router()
 const defaultDays = 7
@@ -103,7 +103,7 @@ router.get('/button-clicks-activity', validateStartDate, async (req, res) => {
       }
     ])
 
-    const clickCountsPerDay = postProcessClickActivity(data, new ProcessDataHelper('activityCount'))
+    const clickCountsPerDay = postProcessClickActivity(data)
 
     const responsePayload = {
       totalObjects: data.length,

@@ -6,7 +6,7 @@ const buttonClickSchema = new mongoose.Schema({
     {
       buttonId: { type: String, required: true },
       pageURL: { type: String, required: true },
-      timestamp: { type: Date, required: true },
+      timestamp: { type: Date, required: true }
     }
   ]
 })
