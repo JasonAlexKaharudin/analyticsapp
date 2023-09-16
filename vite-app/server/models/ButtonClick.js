@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const buttonClickSchema = new mongoose.Schema({
   userID: { type: String, required: true },
@@ -7,10 +7,10 @@ const buttonClickSchema = new mongoose.Schema({
       buttonId: { type: String, required: true },
       pageURL: { type: String, required: true },
       timestamp: { type: Date, required: true },
-    },
-  ],
-});
-  
-const ButtonClick = mongoose.model('ButtonClick', buttonClickSchema);
+    }
+  ]
+})
 
-export default ButtonClick;
+const ButtonClick = mongoose.model('ButtonClick', buttonClickSchema)
+
+export default ButtonClick

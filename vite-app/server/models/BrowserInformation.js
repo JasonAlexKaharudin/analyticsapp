@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const browserInfoSchema = new mongoose.Schema({
   userID: { type: String },
@@ -10,8 +10,8 @@ const browserInfoSchema = new mongoose.Schema({
   timezone: { type: String },
   language: { type: String },
   timestamp: { type: Date, required: true },
-});
-  
-const BrowserInfo = mongoose.model('BrowserInfo', browserInfoSchema);
+})
 
-export default BrowserInfo;
+const BrowserInfo = mongoose.model('BrowserInfo', browserInfoSchema)
+
+export default BrowserInfo
