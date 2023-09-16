@@ -15,8 +15,8 @@ const UserLocationChart = () => {
     const locationData = useMemo(() => {
         let formattedData: LocationData[] = [];
 
-        if (data && data[0].usersPerLocation){
-            const locationObject = data[0].usersPerLocation
+        if (data && data.usersPerLocation){
+            const locationObject = data.usersPerLocation
             const locationEntries = Object.entries(locationObject);
 
             formattedData = locationEntries.map(([location, count]) => {

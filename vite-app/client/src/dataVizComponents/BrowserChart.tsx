@@ -9,13 +9,13 @@ const BrowserChart = () => {
     const pieColors = ["#BD6100", "#D86F01", "#F77E00", "#F1902A", "#FFAE59"];
 
     const deviceData = useMemo(() => {
-        if (data && data[0].usersPerDevice) {
-          const deviceObject = data[0].usersPerDevice;
+        if (data && data.usersPerDevice) {
+          const deviceObject = data.usersPerDevice;
           const sortedDeviceArray = Object.entries(deviceObject).sort((a, b) => b[1] - a[1]);
       
           return sortedDeviceArray.map(([device, count]) => ({ device, count }));
         }
-      
+
         return [];
     }, [data]);
 

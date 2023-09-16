@@ -21,7 +21,7 @@ export const analyticsApi = createApi({
             query: () => `${baseURL}/button-clicks-activity`,
             providesTags: ["ButtonClickActivity"]
         }),
-        getBrowserStats: build.query<Array<GetBrowserStatisticsResponse>, void>({
+        getBrowserStats: build.query<GetBrowserStatisticsResponse, void>({
             query: () => `${baseURL}/browser-statistics`,
             providesTags: ["BrowserStats"]
         }),

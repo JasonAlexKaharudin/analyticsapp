@@ -17,13 +17,13 @@ const SessionChart = () => {
   
     const sessionCounts = useMemo(() => {
       return (
-        data && data[0].sessionCountsPerDay
+        data && data.sessionCountsPerDay
       )
     }, [data])
 
     const todaysSessions = useMemo(() => {
       return (
-        data && data[0].sessionCountsPerDay[data[0].sessionCountsPerDay.length - 1]['visits']
+        data && data.sessionCountsPerDay[data.sessionCountsPerDay.length - 1].visits
       )
     }, [data])
 
@@ -33,7 +33,7 @@ const SessionChart = () => {
             <div className="flex">
               <BoxHeader
                 title="Sessions"
-                value={data && data[0].numberOfSessions}
+                value={data && data.numberOfSessions}
                 secondHeader={true}
                 secondTitle="Today"
                 secondValue={todaysSessions}
