@@ -13,8 +13,7 @@ const createValidationMiddleware = (schema) => {
         body('device').isString(),
         body('operatingSystem').isString(),
         body('timezone').isString(),
-        body('language').isString(),
-        body('timestamp').notEmpty().isISO8601()
+        body('language').isString()
       ]
       break
     case 'ButtonClick':
