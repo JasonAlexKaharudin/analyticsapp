@@ -32,9 +32,6 @@ function transformVisitsData (visitsData) {
 }
 
 export function postProcessBrowserInfo (browserInfoData) {
-  const datesArray = generateLast7Dates()
-  console.log(datesArray)
-
   const numberOfSessions = browserInfoData.length
   const usersPerLocation = {}
   const usersPerBrowserName = {}
@@ -52,7 +49,6 @@ export function postProcessBrowserInfo (browserInfoData) {
 
     sessionCounts[formattedDate] = (sessionCounts[formattedDate] || 0) + 1
   }
-  console.log(sessionCounts)
   sessionCountsPerDay = transformVisitsData(sessionCounts)
 
   return {
