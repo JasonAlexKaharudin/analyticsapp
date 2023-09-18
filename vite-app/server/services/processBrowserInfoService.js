@@ -2,7 +2,7 @@ import { ProcessDataHelper } from '../helpers/processDataHelper.js'
 
 const processDataHelper = new ProcessDataHelper('visits')
 
-export function postProcessBrowserInfo (browserInfoData) {
+export function postProcessBrowserInfoService (browserInfoData) {
   const numberOfSessions = browserInfoData.length
   const usersPerLocation = {}
   const usersPerBrowserName = {}

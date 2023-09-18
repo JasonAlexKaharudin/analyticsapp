@@ -2,7 +2,7 @@ import { ProcessDataHelper } from '../helpers/processDataHelper.js'
 
 const processDataHelper = new ProcessDataHelper('activityCount')
 
-export function postProcessClickActivity (clickData) {
+export function processClickActivityService (clickData) {
   const clickCountData = {}
 
   for (const clickObject of clickData) {

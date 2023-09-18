@@ -2,7 +2,7 @@ import express from 'express'
 import BrowserInfo from '../models/BrowserInformation.js'
 import validateStartDate from '../middleware/validateStartDate.js'
 import createValidationMiddleware from '../middleware/validationMiddleWare.js'
-import { postProcessBrowserInfo } from '../middleware/postProcessBrowserInfo.js'
+import { postProcessBrowserInfoService } from '../services/processBrowserInfoService.js'
 
 const router = express.Router()
 const browserInfoValidationMiddleware = createValidationMiddleware('BrowserInfo')
@@ -23,7 +23,7 @@ router.get('/browser-statistics', validateStartDate, async (req, res) => {
 
   try {
     const browserInfoData = await BrowserInfo.find({ timestamp: { $gte: startDate } })
-    const browserAnalytics = postProcessBrowserInfo(browserInfoData)
+    const browserAnalytics = postProcessBrowserInfoService(browserInfoData)
 
     res.status(200).json(browserAnalytics)
   } catch (error) {

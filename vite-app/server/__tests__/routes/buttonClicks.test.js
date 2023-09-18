@@ -1,9 +1,9 @@
 import supertest from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
 import mongoose from 'mongoose'
-import { createServer } from '../utils/server'
-import ButtonClick from '../models/ButtonClick.js'
-import { ProcessDataHelper } from '../helpers/processDataHelper'
+import { createServer } from '../../utils/server'
+import ButtonClick from '../../models/ButtonClick.js'
+import { ProcessDataHelper } from '../../helpers/processDataHelper'
 
 // Server Set Up
 const app = createServer()
