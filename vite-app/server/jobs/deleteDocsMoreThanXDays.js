@@ -3,7 +3,7 @@ import PageViewDuration from '../models/PageViewDuration.js'
 import BrowserInfo from '../models/BrowserInformation.js'
 
 export async function deleteDocsMoreThanXDays () {
-  const Xdays = Date.now() - 14 * 24 * 60 * 60 * 1000
+  const Xdays = Date.now() - 14 * 24 * 60 * 60 * 1000 // 14 days
 
   try {
     const result = []

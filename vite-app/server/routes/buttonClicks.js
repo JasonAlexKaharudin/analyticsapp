@@ -4,7 +4,6 @@ import validateStartDate from '../middleware/validateStartDate.js'
 import ButtonClick from '../models/ButtonClick.js'
 import { postProcessClickActivity } from '../middleware/postProcessClickActivity.js'
 
-
 const router = express.Router()
 const defaultDays = 7
 
