@@ -10,7 +10,7 @@ export function postProcessClickActivity (clickData) {
 
     clickCountData[formattedDate] = (clickCountData[formattedDate] || 0) + 1
   }
-  const clickCountsPerDay = processDataHelper.formatForClient([clickCountData], 'activityCount')
+  const clickCountsPerDay = processDataHelper.formatForClient([clickCountData])
 
   return clickCountsPerDay
 }

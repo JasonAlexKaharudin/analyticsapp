@@ -14,10 +14,9 @@ router.post('/button-click', buttonClickValidationMiddleware, async (req, res) =
     const clickData = req.body
     const createdButtonClickObject = await ButtonClick.create(clickData)
 
-    console.log('successfull create buttonClick')
     res.status(201).json(createdButtonClickObject)
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ 'Internal Server Error': error })
   }
 })
 
@@ -44,7 +43,7 @@ router.get('/button-clicks', validateStartDate, async (req, res) => {
     res.status(200).json(responsePayload)
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ 'Internal Server Error': error })
   }
 })
 
@@ -83,7 +82,7 @@ router.get('/button-clicks-stats', validateStartDate, async (req, res) => {
 
     res.status(200).json(statistics)
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ 'Internal Server Error': error })
   }
 })
 
@@ -112,7 +111,7 @@ router.get('/button-clicks-activity', validateStartDate, async (req, res) => {
     res.status(200).json([responsePayload])
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: 'Internal Server Error.' })
+    res.status(500).json({ 'Internal Server Error.': error })
   }
 })
 

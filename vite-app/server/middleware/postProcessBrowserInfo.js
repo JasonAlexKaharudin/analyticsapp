@@ -19,7 +19,7 @@ export function postProcessBrowserInfo (browserInfoData) {
     sessionCounts[formattedDate] = (sessionCounts[formattedDate] || 0) + 1
   }
 
-  const sessionCountsPerDay = processDataHelper.formatForClient([sessionCounts], 'visits')
+  const sessionCountsPerDay = processDataHelper.formatForClient([sessionCounts])
 
   return {
     numberOfSessions,

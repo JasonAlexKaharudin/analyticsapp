@@ -7,7 +7,7 @@ export class ProcessDataHelper {
     return `${timestamp.getDate()}/${timestamp.getMonth() + 1}`
   }
 
-  formatForClient (inputObj, metricName) {
+  formatForClient (inputObj) {
     const currentDate = new Date()
     const result = []
 
@@ -18,7 +18,7 @@ export class ProcessDataHelper {
 
       const metricValue = inputObj[0][formattedDate] || 0
       const item = { date: formattedDate }
-      item[metricName] = metricValue
+      item[this.metricName] = metricValue
       result.push(item)
     }
 
