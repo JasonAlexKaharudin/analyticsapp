@@ -7,15 +7,15 @@ const router = express.Router()
 const defualtDays = 7
 
 const pageViewValidationMiddleware = createValidationMiddleware('PageViewDuration')
+
 router.post('/page-view', pageViewValidationMiddleware, async (req, res) => {
   try {
     const pageViewDurationData = req.body
     const createdPageViewObject = await PageViewDuration.create(pageViewDurationData)
 
-    console.log('Successful created Page View')
     res.status(201).json(createdPageViewObject)
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ 'Internal Server Error': error })
   }
 })
 
@@ -57,7 +57,7 @@ router.get('/average-page-views', validateStartDate, async (req, res) => {
     res.status(200).json(responsePayload)
   } catch (error) {
     console.log(error)
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ 'Internal Server Error': error })
   }
 })
 

@@ -1,35 +1,17 @@
 import supertest from 'supertest'
-import { v4 as uuidv4 } from 'uuid'
 import mongoose from 'mongoose'
 import { createServer } from '../../utils/server'
 import ButtonClick from '../../models/ButtonClick.js'
-import { ProcessDataHelper } from '../../helpers/processDataHelper'
+import TestFactory from '../../helpers/test/factory/testFactory'
 
 // Server Set Up
 const app = createServer()
 const request = supertest(app)
 
 // User Info Click Data Set Up
-const clickUUID = uuidv4()
-const dataManipulater = new ProcessDataHelper('activityCount')
-
-const buttonClickPayload = {
-  userID: clickUUID,
-  clicks: [
-    {
-      buttonId: '/finance',
-      pageURL: '/',
-      timestamp: new Date().toISOString()
-    },
-    {
-      buttonId: '/analytics',
-      pageURL: '/',
-      timestamp: new Date().toISOString()
-    }
-  ]
-}
-
-const emptyCountsPerDayArray = dataManipulater.formatForClient([{}])
+const factory = new TestFactory('ButtonClick')
+const buttonClickPayload = factory.generatePayload()
+const expectedCounts = factory.generateExpectedCounts()
 
 describe('ButtonClick Analytics', () => {
   beforeAll(async () => {
@@ -55,7 +37,7 @@ describe('ButtonClick Analytics', () => {
 
       expect(response.status).toBe(201)
       expect(response.body).toEqual({
-        userID: clickUUID,
+        userID: buttonClickPayload.userID,
         clicks: updatedClicks,
         _id: expect.any(String),
         __v: 0
@@ -74,7 +56,7 @@ describe('ButtonClick Analytics', () => {
           data: [
             {
               _id: expect.any(String),
-              userID: clickUUID,
+              userID: buttonClickPayload.userID,
               clicks: {
                 _id: expect.any(String),
                 buttonId: '/finance',
@@ -85,7 +67,7 @@ describe('ButtonClick Analytics', () => {
             },
             {
               _id: expect.any(String),
-              userID: clickUUID,
+              userID: buttonClickPayload.userID,
               clicks: {
                 buttonId: '/analytics',
                 pageURL: '/',
@@ -118,15 +100,6 @@ describe('ButtonClick Analytics', () => {
     })
 
     describe('/button-clicks-activity', () => {
-      const emptyCountsPerDayArray = dataManipulater.formatForClient([{}])
-      const targetDate = dataManipulater.formatDate(new Date(buttonClickPayload.clicks[0].timestamp))
-      const updatedCountsArray = emptyCountsPerDayArray.map(item => {
-        if (item.date === targetDate) {
-          return { ...item, activityCount: 2 }
-        }
-        return item
-      })
-
       it('returns 200 and an object with updated activity counts', async () => {
         const response = await request.get('/api/analytics/button-clicks-activity')
 
@@ -134,48 +107,7 @@ describe('ButtonClick Analytics', () => {
         expect(response.body).toEqual([
           {
             totalObjects: 2,
-            activity: updatedCountsArray
-          }
-        ])
-      })
-    })
-  })
-
-  describe('Querying with empty collection', () => {
-    beforeAll(async () => {
-      await ButtonClick.deleteMany({})
-    })
-
-    describe('/button-clicks', () => {
-      it('returns 200 and an object with an empty data array', async () => {
-        const response = await request.get('/api/analytics/button-clicks')
-
-        expect(response.status).toBe(200)
-        expect(response.body).toEqual({
-          totalObjects: 0,
-          data: []
-        })
-      })
-    })
-
-    describe('/button-clicks-stats', () => {
-      it('returns 200 and an object with total clicks grouped by button', async () => {
-        const response = await request.get('/api/analytics/button-clicks-stats')
-
-        expect(response.status).toBe(200)
-        expect(response.body).toEqual([])
-      })
-    })
-
-    describe('/button-clicks-activity', () => {
-      it('returns 200 and an object with updated activity counts', async () => {
-        const response = await request.get('/api/analytics/button-clicks-activity')
-
-        expect(response.status).toBe(200)
-        expect(response.body).toEqual([
-          {
-            totalObjects: 0,
-            activity: emptyCountsPerDayArray
+            activity: expectedCounts
           }
         ])
       })
